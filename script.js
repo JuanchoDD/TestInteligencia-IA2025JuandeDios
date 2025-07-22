@@ -35,23 +35,26 @@ const preguntas = [
   { texto: "Me doy cuenta de los estados de ánimo de otros.", cat: "G" }, // 34
   { texto: "Me doy cuenta bastante bien de lo que otros piensan de mí.", cat: "G" }  // 35
 ];
+
 let indice = 0;
 let puntajes = { A: 0, B: 0, C: 0, D: 0, E: 0, F: 0, G: 0 };
-let datosUsuario = { nombre: "", edad: "", carrera: "", curso: "" };
+let datosUsuario = { nombre: "", edad: "", carrera: "" };
 const seccionInicio = document.getElementById('inicio');
 const seccionPreguntas = document.getElementById('preguntas');
 const seccionResultado = document.getElementById('resultado');
+
 const textoPregunta = document.getElementById('texto-pregunta');
 const progreso = document.getElementById('progreso');
 const textoResultado = document.getElementById('texto-resultado');
 const detalleResultados = document.getElementById('detalle-resultados');
 const contenedorPregunta = document.getElementById('contenedor-pregunta');
 const mensajeError = document.getElementById('mensajeError');
+
 const botonesOpcion = document.querySelectorAll('.btn-opcion');
+
 const inputNombre = document.getElementById('nombre');
 const inputEdad = document.getElementById('edad');
 const inputCarrera = document.getElementById('carrera');
-const inputCurso = document.getElementById('curso');
 const nombresCats = {
   A: "Inteligencia Verbal",
   B: "Inteligencia Lógico-Matemática",
@@ -67,6 +70,7 @@ function contarMaximos() {
   return max;
 }
 const maxPorCat = contarMaximos();
+
 function interpretar(cat) {
   const puntos = puntajes[cat];
   const max = maxPorCat[cat] || 5;
@@ -76,6 +80,7 @@ function interpretar(cat) {
   if (puntos === 2) return "Bajo";
   return "Muy bajo";
 }
+
 function mostrarPantalla(pantalla) {
   document.querySelectorAll('.pantalla').forEach(sec => sec.classList.remove('active'));
   pantalla.classList.add('active');
@@ -91,6 +96,7 @@ function cargarPregunta() {
     mostrarResultado();
   }
 }
+
 function responder(respuesta) {
   if (respuesta === 'V' && indice < preguntas.length) {
     puntajes[preguntas[indice].cat]++;
@@ -105,12 +111,15 @@ function responder(respuesta) {
 function mostrarResultado() {
   progreso.style.width = '100%';
   mostrarPantalla(seccionResultado);
+
   const maxCat = Object.keys(puntajes)
     .reduce((a, b) => (puntajes[a] > puntajes[b] ? a : b));
+
   textoResultado.textContent = `
-    ${datosUsuario.nombre} (${datosUsuario.edad} años) - ${datosUsuario.carrera} / ${datosUsuario.curso}
+    ${datosUsuario.nombre} (${datosUsuario.edad} años) - ${datosUsuario.carrera}
     → Tu inteligencia predominante es: ${nombresCats[maxCat]} con ${puntajes[maxCat]} punto(s).
   `.trim();
+
   let filas = '';
   Object.keys(puntajes).forEach(cat => {
     filas += `
@@ -121,6 +130,7 @@ function mostrarResultado() {
       </tr>
     `;
   });
+
   detalleResultados.innerHTML = `
     <table>
       <thead>
@@ -138,8 +148,7 @@ function validarDatos() {
   mensajeError.textContent = "";
   if (!inputNombre.value.trim() ||
       !inputEdad.value.trim() ||
-      !inputCarrera.value.trim() ||
-      !inputCurso.value.trim()) {
+      !inputCarrera.value.trim()) {
     mensajeError.textContent = "Por favor completa todos los campos antes de iniciar.";
     return false;
   }
@@ -150,16 +159,17 @@ document.getElementById('btnIniciar').addEventListener('click', () => {
   datosUsuario.nombre = inputNombre.value.trim();
   datosUsuario.edad = inputEdad.value.trim();
   datosUsuario.carrera = inputCarrera.value.trim();
-  datosUsuario.curso = inputCurso.value.trim();
   mostrarPantalla(seccionPreguntas);
   indice = 0;
   cargarPregunta();
 });
+
 botonesOpcion.forEach(btn => {
   btn.addEventListener('click', () => {
     responder(btn.dataset.respuesta);
   });
 });
+
 document.getElementById('btnReiniciar').addEventListener('click', () => {
   indice = 0;
   puntajes = { A: 0, B: 0, C: 0, D: 0, E: 0, F: 0, G: 0 };
@@ -167,3 +177,4 @@ document.getElementById('btnReiniciar').addEventListener('click', () => {
   progreso.style.width = '0';
   mensajeError.textContent = "";
 });
+
