@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test de Inteligencia - IA 2025</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <section id="inicio" class="pantalla active">
+      <h1 class="titulo-animado">Test de Inteligencias Múltiples</h1>
+      <form id="formDatos" class="form-datos">
+        <div class="form-grupo">
+          <label for="nombre">Nombre completo</label>
+          <input type="text" id="nombre" required>
+        </div>
+        <div class="form-grupo">
+          <label for="edad">Edad</label>
+          <input type="number" id="edad" min="1" max="120" required>
+        </div>
+
+        <div class="form-grupo">
+          <label for="carrera">Carrera</label>
+          <input type="text" id="carrera" required>
+        </div>
+      </form>
+      <p id="mensajeError" class="mensaje-error" aria-live="polite"></p>
+      <button id="btnIniciar" class="btn">Iniciar Test</button>
+    </section>
+    <section id="preguntas" class="pantalla">
+      <div class="barra-progreso">
+        <div id="progreso"></div>
+      </div>
+      <div id="contenedor-pregunta" class="anim-slide-in">
+        <p id="texto-pregunta">Pregunta aquí</p>
+        <div class="opciones">
+          <button class="btn-opcion" data-respuesta="V">Verdadero</button>
+          <button class="btn-opcion" data-respuesta="F">Falso</button>
+        </div>
+      </div>
+    </section>
+    <section id="resultado" class="pantalla">
+      <h2>Tu Resultado</h2>
+      <p id="texto-resultado">Aquí se mostrará tu tipo de inteligencia predominante.</p>
+      <div id="detalle-resultados"></div>
+      <button id="btnReiniciar" class="btn">Volver a iniciar</button>
+    </section>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
